@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local Community Event Portal</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      background-image: url('background.png');
+      background-color: #f4f4f9;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center;
+    }
+    #welcomeBanner {
+      background-color: #3498db;
+      color: #ffffff;
+      padding: 20px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .highlight {
+      background-color: #f1c40f;
+      color: #2c3e50;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header id="mainHeader">
+    <h1>MetroEvent Portal</h1>
+    <nav>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="#home" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="#events" class="nav-link">Events</a></li>
+        <li class="nav-item"><a href="#register" class="nav-link">Register</a></li>
+        <li class="nav-item"><a href="help.html" target="_blank" class="nav-link">Get Help</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main -->
+  <main>
+    <section id="home">
+      <div id="welcomeBanner">
+        <h2>Welcome back, Resident!</h2>
+        <p>Check out our special deals: <span style="color: red; font-weight: bold;">50% off pottery classes this weekend!</span></p>
+      </div>
+      <p>Stay connected with community projects. We highlight <span class="highlight">free admission</span> for all cleanup volunteers.</p>
+    </section>
+
+    <section id="events">
+      <h2>Community Event Gallery</h2>
+      <table class="gallery-table">
+        <caption>Past Event Highlights (Double-click to enlarge)</caption>
+        <tbody>
+          <tr>
+            <td>
+              <img src="event.png" alt="Cleanup event" title="Community Cleanup Drive" class="gallery-img" ondblclick="toggleEnlarge(this)">
+            </td>
+            <td>
+              <img src="event.png" alt="Pottery event" title="Weekend Pottery Class" class="gallery-img" ondblclick="toggleEnlarge(this)">
+            </td>
+            <td>
+              <img src="event.png" alt="Food festival" title="Annual Neighborhood Cook-off" class="gallery-img" ondblclick="toggleEnlarge(this)">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="event.png" alt="Art exhibition" title="Local Art Showcase" class="gallery-img" ondblclick="toggleEnlarge(this)">
+            </td>
+            <td>
+              <img src="event.png" alt="Music night" title="Acoustic Music Night" class="gallery-img" ondblclick="toggleEnlarge(this)">
+            </td>
+            <td>
+              <img src="event.png" alt="Tree planting" title="Park Tree Planting" class="gallery-img" ondblclick="toggleEnlarge(this)">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="video-invite">
+      <h2>Video Invitation</h2>
+      <video controls oncanplay="handleVideoReady()">
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div id="videoStatus" style="text-align: center; font-weight: bold; color: #27ae60; margin-top: 10px;">Loading video invite...</div>
+    </section>
+
+    <section id="register">
+      <h2>Event Registration</h2>
+      <form onsubmit="handleFormSubmit(event)">
+        <div class="form-group">
+          <label for="userName">Full Name</label>
+          <input type="text" id="userName" class="form-input" placeholder="John Doe" required autofocus>
+        </div>
+
+        <div class="form-group">
+          <label for="userEmail">Email Address</label>
+          <input type="email" id="userEmail" class="form-input" placeholder="john@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="userPhone">Phone Number</label>
+          <input type="tel" id="userPhone" class="form-input" placeholder="1234567890" onblur="validatePhone(this)">
+        </div>
+
+        <div class="form-group">
+          <label for="eventDate">Preferred Date</label>
+          <input type="date" id="eventDate" class="form-input" required>
+        </div>
+
+        <div class="form-group">
+          <label for="eventType">Event Type</label>
+          <select id="eventType" class="form-input" required onchange="updateFee(this)">
+            <option value="">-- Select Event --</option>
+            <option value="clean-up">Community Cleanup</option>
+            <option value="pottery">Pottery Workshop</option>
+            <option value="cook-off">Neighborhood Cook-off</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Event Fee:</label>
+          <span id="feeDisplay" style="font-weight: bold; color: #2c3e50;">$0.00</span>
+        </div>
+
+        <div class="form-group">
+          <label for="userMessage">Feedback & Message</label>
+          <textarea id="userMessage" class="form-input" placeholder="Write your comments here..." rows="4" onkeyup="countChars(this)"></textarea>
+          <div id="charCount" style="font-size: 0.85rem; color: #7f8c8d; margin-top: 5px;">Character count: 0</div>
+        </div>
+
+        <button type="submit" class="submit-btn" onclick="confirmSubmitClick()">Submit Registration</button>
+        <button type="button" class="submit-btn" style="background-color: #e74c3c; margin-top: 10px;" onclick="clearPreferences()">Clear Preferences</button>
+        
+        <output id="formOutput" style="display: none;"></output>
+      </form>
+    </section>
+
+    <section id="mapping" style="text-align: center;">
+      <h2>Event Mapping</h2>
+      <button class="submit-btn" style="max-width: 250px;" onclick="findLocation()">Find Nearby Events</button>
+      <div id="locationCoords" class="coord-display">Click to display coordinates.</div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 25px; border-top: 1px solid #cccccc; margin-top: 30px; background-color: #2c3e50; color: #ffffff;">
+    <p>&copy; 2026 MetroEvent Local Community Portal. All rights reserved.</p>
+  </footer>
+
+  <script>
+    let formDirty = false;
+    const formInputs = document.querySelectorAll('.form-input');
+    formInputs.forEach(input => {
+      input.addEventListener('input', () => {
+        formDirty = true;
+      });
+    });
+
+    window.onbeforeunload = function() {
+      if (formDirty) {
+        return "You have unsaved changes. Are you sure you want to leave?";
+      }
+    };
+
+    function validatePhone(input) {
+      const phoneRegex = /^\d{10}$/;
+      if (input.value && !phoneRegex.test(input.value)) {
+        input.style.border = '2px solid red';
+      } else {
+        input.style.border = '1px solid #cccccc';
+      }
+    }
+
+    const fees = {
+      "": "$0.00",
+      "clean-up": "$0.00 (Free)",
+      "pottery": "$25.00",
+      "cook-off": "$10.00"
+    };
+
+    function updateFee(select) {
+      const selected = select.value;
+      document.getElementById('feeDisplay').textContent = fees[selected] || "$0.00";
+      if (selected) {
+        localStorage.setItem('preferredEvent', selected);
+      }
+    }
+
+    window.addEventListener('load', () => {
+      const preferred = localStorage.getItem('preferredEvent');
+      if (preferred) {
+        const select = document.getElementById('eventType');
+        select.value = preferred;
+        updateFee(select);
+      }
+    });
+
+    function clearPreferences() {
+      localStorage.clear();
+      sessionStorage.clear();
+      const select = document.getElementById('eventType');
+      select.value = "";
+      updateFee(select);
+      alert("Preferences cleared!");
+    }
+
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      const name = document.getElementById('userName').value;
+      const email = document.getElementById('userEmail').value;
+      const date = document.getElementById('eventDate').value;
+      const type = document.getElementById('eventType').value;
+      
+      formDirty = false;
+      
+      const output = document.getElementById('formOutput');
+      output.style.display = 'block';
+      output.textContent = `Confirmation: Thank you ${name}! You registered for ${type} on ${date}. Email sent to ${email}.`;
+    }
+
+    function confirmSubmitClick() {
+      console.log("Registration submission initiated.");
+    }
+
+    function toggleEnlarge(img) {
+      const wasEnlarged = img.classList.contains('enlarged');
+      document.querySelectorAll('.gallery-img').forEach(el => el.classList.remove('enlarged'));
+      if (!wasEnlarged) {
+        img.classList.add('enlarged');
+      }
+    }
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.classList.contains('gallery-img')) {
+        document.querySelectorAll('.gallery-img').forEach(el => el.classList.remove('enlarged'));
+      }
+    });
+
+    function countChars(textarea) {
+      const len = textarea.value.length;
+      document.getElementById('charCount').textContent = `Character count: ${len}`;
+    }
+
+    function handleVideoReady() {
+      document.getElementById('videoStatus').textContent = "Video ready to play";
+    }
+
+    function findLocation() {
+      const display = document.getElementById('locationCoords');
+      display.textContent = "Retrieving location coordinates...";
+      
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+      };
+      
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          display.textContent = `Coordinates: Lat ${position.coords.latitude.toFixed(4)}, Long ${position.coords.longitude.toFixed(4)}`;
+        },
+        (error) => {
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              display.textContent = "Error: Geolocation permission denied.";
+              break;
+            case error.POSITION_UNAVAILABLE:
+              display.textContent = "Error: Location unavailable.";
+              break;
+            case error.TIMEOUT:
+              display.textContent = "Error: Location request timed out.";
+              break;
+            default:
+              display.textContent = "Error: Unknown error occurred.";
+              break;
+          }
+        },
+        options
+      );
+    }
+  </script>
+</body>
+</html>

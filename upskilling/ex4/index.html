@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local Community Event Portal</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+  <header>
+    <h1>Community Event Portal</h1>
+    <p>Find, filter, and register for local neighborhood gatherings.</p>
+  </header>
+
+  <main>
+    <section class="controls-row">
+      <input type="text" id="searchInput" class="filter-input" placeholder="Search events by title...">
+      
+      <select id="categoryFilter" class="filter-input">
+        <option value="all">All Categories</option>
+        <option value="volunteer">Volunteer & Cleanup</option>
+        <option value="arts">Art Classes</option>
+        <option value="music">Music Performances</option>
+        <option value="food">Food & Culinary</option>
+      </select>
+    </section>
+
+    <div id="spinnerContainer">
+      <div class="spinner"></div>
+    </div>
+
+    <section class="events-grid" id="eventsContainer"></section>
+
+    <section>
+      <form id="registrationForm" novalidate>
+        <h2 style="text-align: center; margin-bottom: 20px;">Register for an Event</h2>
+        
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" class="form-control" placeholder="Jane Doe">
+          <div class="invalid-feedback" id="nameError">Full name is required (min 3 characters).</div>
+        </div>
+
+        <div class="form-group">
+          <label for="emailAddr">Email Address</label>
+          <input type="email" id="emailAddr" class="form-control" placeholder="jane@example.com">
+          <div class="invalid-feedback" id="emailError">Please enter a valid email address.</div>
+        </div>
+
+        <div class="form-group">
+          <label for="eventSelect">Select Event</label>
+          <select id="eventSelect" class="form-control">
+            <option value="">-- Choose an Event --</option>
+          </select>
+          <div class="invalid-feedback" id="eventError">Please select an event.</div>
+        </div>
+
+        <button type="submit" id="registerBtn" class="btn">Register Now</button>
+        
+        <div id="formFeedback" style="margin-top: 20px;"></div>
+      </form>
+    </section>
+  </main>
+
+  <footer style="margin-top: 50px; padding: 30px 5%; background-color: #1e293b; color: #94a3b8; text-align: center; font-size: 0.9rem;">
+    <p>&copy; 2026 Local Community Event Portal. All rights reserved.</p>
+    <div style="max-width: 600px; margin: 15px auto 0 auto; border-top: 1px solid #334155; padding-top: 15px;">
+      <h5 style="color: #f1f5f9; margin-bottom: 8px;">Why migrate to modern JS frameworks (React/Vue/Angular)?</h5>
+      <p>Moving to a framework provides <strong>declarative state management</strong>. Instead of manually querying the DOM and forcing mutations via jQuery or vanilla script triggers (e.g. creating/removing cards and handling inner element increments), the framework automatically synchronized the UI elements with the JavaScript state data, minimizing UI errors and simplifying complex portals development.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
