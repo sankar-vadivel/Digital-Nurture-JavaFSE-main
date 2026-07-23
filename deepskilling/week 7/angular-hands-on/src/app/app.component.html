@@ -1,0 +1,41 @@
+<div style="font-family: 'Plus Jakarta Sans', sans-serif; padding: 30px; max-width: 800px; margin: 0 auto; color: #1e293b;">
+  <header style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); color: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+    <h1 style="margin: 0 0 8px 0; font-size: 1.75rem;">{{ title }}</h1>
+    <p style="margin: 0; opacity: 0.9;">Maintained by <strong>{{ author }}</strong> | Enterprise Digital Nurture</p>
+  </header>
+
+  <main style="margin-top: 20px;">
+    <div style="margin-bottom: 15px;">
+      <button (click)="setCategory('All')" style="margin-right: 8px; padding: 8px 16px;">All</button>
+      <button (click)="setCategory('Books')" style="margin-right: 8px; padding: 8px 16px;">Books</button>
+      <button (click)="setCategory('Training')" style="margin-right: 8px; padding: 8px 16px;">Training</button>
+      <button (click)="setCategory('Tools')" style="padding: 8px 16px;">Tools</button>
+    </div>
+
+    <h3>Products (Category: {{ selectedCategory }})</h3>
+    <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+      <thead>
+        <tr style="background: #f1f5f9;">
+          <th>ID</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price (₹)</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of filteredProducts">
+          <td>{{ p.id }}</td>
+          <td>{{ p.name }}</td>
+          <td>{{ p.category }}</td>
+          <td>₹{{ p.price }}</td>
+          <td>
+            <span [style.color]="p.available ? 'green' : 'red'">
+              {{ p.available ? 'In Stock' : 'Out of Stock' }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+</div>

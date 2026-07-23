@@ -1,0 +1,16 @@
+/* Angular App Component Styles */
+* {
+  font-family: 'Open Sans', Arial, sans-serif;
+}
+table {
+  border-color: #b0bec5;
+}
+button {
+  border-radius: 4px;
+  border: 1px solid #b0bec5;
+  background: #eceff1;
+  cursor: pointer;
+}
+button:hover {
+  background: #cfd8dc;
+}
